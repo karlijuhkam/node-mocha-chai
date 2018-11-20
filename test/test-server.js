@@ -14,12 +14,24 @@ chai.use(chaiHttp);
 describe('Algorithms', function () {
 
 
-    it('should say Hello and your input on /hello GET', function (done) {
+    it('should say Hello demo on /hello/demo GET', function (done) {
         chai.request(server)
             .get('/hello/demo')
             .end(function (err, res) {
                 res.should.have.status(200);
                 res.body.result.should.equal('Hello demo');
+                done();
+            });
+
+
+    });
+
+    it('should say Hello test on /hello/test GET', function (done) {
+        chai.request(server)
+            .get('/hello/test')
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.result.should.equal('Hello test');
                 done();
             });
 

@@ -13,7 +13,7 @@ var AlgorithmiaCtrl = function () {
                     'Content-Type': 'application/json',
                     'Authorization': 'Simple simR5LVbr4u6iRdPQ8GgjTAIIL21'
                 },
-                body: '"demo"'
+                body: '"'+req.params.name+'"'
             }, function (error, response) {
 
                 res.send(JSON.parse(response.body));

@@ -37,7 +37,7 @@ app.use('/', routes);
 
 // *** server config *** //
 var server   = http.createServer(app);
-server.listen(1337, function() {
+server.listen(80, function() {
   console.log("Node server running on http://localhost:1337");
 });
 
