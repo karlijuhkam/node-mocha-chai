@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
 // *** api routes *** //
 router.get('/hello/:name', Algorithmia.Hello);
+router.post('/nudity', Algorithmia.Nudity);
 
 
 // *** get ALL blobs *** //
