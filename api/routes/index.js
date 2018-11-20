@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Blob = require('../models/blob');
-var Algorithmia = require('../../controllers/Algorithmia.controller')(Algorithmia);
+var Algorithmia = require('../controllers/Algorithmia.controller')(Algorithmia);
 
 router.get('/', function(req, res, next) {
   res.send('Hello, World!');

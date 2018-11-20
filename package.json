@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./server/app"
+    "start": "node ./api/app"
   },
   "dependencies": {
     "algorithmia": "^0.3.10",

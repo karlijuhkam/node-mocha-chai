@@ -22,7 +22,9 @@ var AlgorithmiaCtrl = function () {
         );
 
 
-    }
+    };
+
+
 
     return AlgorithmiaObj;
 
