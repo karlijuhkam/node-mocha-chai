@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
-// var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 // *** routes *** //
 var routes = require('./routes/index.js');
@@ -17,13 +17,13 @@ var app = express();
 var config = require('./_config');
 
 // *** mongoose *** ///
-// mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
-//     if(err) {
-//         console.log('Error connecting to the database. ' + err);
-//     } else {
-//         console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
-//     }
-// });
+mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+    if(err) {
+        console.log('Error connecting to the database. ' + err);
+    } else {
+        console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+    }
+});
 
 // *** config middleware *** //
 app.use(logger('dev'));
@@ -38,9 +38,9 @@ app.use('/', routes);
 
 // *** server config *** //
 var server   = http.createServer(app);
-var port = 1337;
+var port = 1338;
 server.listen(port, function() {
-    console.log("Node server running on http://localhost:"+port);
+  console.log("Node server running on http://localhost:"+port);
 });
 //test
 module.exports = app;

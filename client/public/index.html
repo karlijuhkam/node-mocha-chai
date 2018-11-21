@@ -5,33 +5,139 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Algoritmid</title>
 </head>
 <body>
-<div id="app">
-    <h1>Hello</h1>
-    <input type="text" v-model="name">
-    <button @click="sendHello">Send</button>
-    {{ helloResponse }}
-</div>
+    <div class="text-center">
+            <div id="app" class="form-group">
+                    <h1>Hello</h1>
+                    <input type="text" v-model="name"><br>
+                    <button @click="sendHello" class="btn btn-info">Send</button><br>
+                    {{ helloResponse }}
+                </div>
+                <hr>
+                <div id="app2">
+                    <h1>Nudity</h1>
+                    <input type="text" v-model="url"><br>
+                    <button @click="sendNude" class="btn btn-info">Send</button>
+                    <h2>{{ nudeResponse }}</h2>
+                </div>
+                <hr>
+                <div id="app3">
+                    <h1>Language Detection</h1>
+                    <textarea cols="60" rows="10" v-model="inputText"></textarea><br>
+                    <button @click="sendText" class="btn btn-info">Send</button>
+                    <h2>{{ langResponse }}</h2>
+                </div>
+                <hr>
+                <div id="app4">
+                    <h1>Word Frequency Counter</h1>
+                    <textarea cols="60" rows="10" v-model="input"></textarea><br>
+                    <button @click="sendFreq" class="btn btn-info">Send</button>
+                    <ul>
+                            <li v-for="(value,key) in words">
+                              {{key}} - {{value}}
+                            </li>
+                    </ul>
+                </div>
+                <hr>
+                <div id="app5">
+                    <h1>Stable Roommates Algorithm</h1>
+                </div>
+                <hr>
+                <div id="app6">
+                        <h1>Face detection</h1>
+                        <form action="/facedetect/?url=" method="get" class="form-group">
+                        URL: <input type="text" name="url" class="form-control"><br>
+                        <input type="submit" value="Saada" class="btn btn-info">
+                        </form> 
+                        <img height="90%" width="auto" src="https://algorithmia.com/v1/data/.algo/opencv/ObjectDetectionWithModels/temp/result.jpg">
+                </div>
+    </div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            name: 'Hello Vue!',
+            name: 'Test',
             helloResponse: null
         },
         methods: {
             sendHello: function () {
-
-
                 axios.get('hello/'+this.name)
                     .then(function(response){
                         app.helloResponse = response.data.result
                     })
 
+            }
+        }
+    });
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            url: 'http://www.isitnude.com.s3-website-us-east-1.amazonaws.com/assets/images/sample/young-man-by-the-sea.jpg',
+            nudeResponse: null
+        },
+        methods: {
+            sendNude: function () {
+                axios.post('nudity', {
+                    url: this.url
+                })
+                    .then(function(response){
+                        console.log('nude:'+response.data.result.nude);
+                        console.log('confidence:'+response.data.result.confidence)
+                        console.log('%:'+response.data.result.confidence*100)
+
+                        let protsent = response.data.result.confidence.toFixed(2)*100;
+
+                        if (response.data.result.nude === true){
+                            app2.nudeResponse = `Pildil olev inimene ON ${protsent}% tõenäosusega alasti.`
+                        } else{
+                            app2.nudeResponse = `Pildil olev inimene EI OLE ${protsent}% tõenäosusega alasti.`
+                        }
+                    })
+
+            }
+        }
+    })
+
+    var app3 = new Vue({
+        el: '#app3',
+        data: {
+            inputText: `Eesti Vabariik on riik Põhja-Euroopas. Eesti piirneb põhjas üle Soome lahe Soomega, läänes üle Läänemere Rootsiga, lõunas Lätiga ning idas Venemaaga. Eesti pindala on tänapäeval 45 339 ruutkilomeetrit.`,
+            langResponse: ''
+        },
+        methods: {
+            sendText: function(){
+                axios.post('detectlang', {
+                    input: this.inputText
+                })
+                .then(function(response){
+                        console.log('lang:'+response.data.result);
+                        app3.langResponse = 'This language is '+response.data.result
+                    })
+            }
+        }
+    });
+
+    var app4 = new Vue({
+        el: '#app4',
+        data: {
+            input:'how much wood could a woodchuck chuck if a woodchuck could chuck wood',
+            words:[]
+        },
+        methods: {
+            sendFreq: function(){
+                axios.post('wordfreq', {
+                    input: this.input
+                })
+                .then(function(response){
+                    app4.words = response.data.result;
+                })
             }
         }
     })

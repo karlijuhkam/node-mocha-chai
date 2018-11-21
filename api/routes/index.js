@@ -10,75 +10,78 @@ router.get('/', function(req, res, next) {
 // *** api routes *** //
 router.get('/hello/:name', Algorithmia.Hello);
 router.post('/nudity', Algorithmia.Nudity);
+router.post('/detectlang', Algorithmia.DetectLang);
+router.post('/wordfreq', Algorithmia.WordFreq);
+router.post('/facedetect/:url',Algorithmia.FaceDetect);
 
 
 // *** get ALL blobs *** //
-function findAllBlobs(req, res) {
-  Blob.find(function(err, blobs) {
-    if(err) {
-      res.json({'ERROR': err});
-    } else {
-      res.json(blobs);
-    }
-  });
-}
+// function findAllBlobs(req, res) {
+//   Blob.find(function(err, blobs) {
+//     if(err) {
+//       res.json({'ERROR': err});
+//     } else {
+//       res.json(blobs);
+//     }
+//   });
+// }
 
 // *** get SINGLE blobs *** //
-function findBlobById(req, res) {
-  Blob.findById(req.params.id, function(err, blob) {
-    if(err) {
-      res.json({'ERROR': err});
-    } else {
-      res.json(blob);
-    }
-  });
-}
+// function findBlobById(req, res) {
+//   Blob.findById(req.params.id, function(err, blob) {
+//     if(err) {
+//       res.json({'ERROR': err});
+//     } else {
+//       res.json(blob);
+//     }
+//   });
+// }
 
 // *** post ALL blobs *** //
-function addBlob(req, res) {
-  var newBlob = new Blob({
-    name: req.body.name,
-    lastName: req.body.lastName
-  });
-  newBlob.save(function(err) {
-    if(err) {
-      res.json({'ERROR': err});
-    } else {
-      res.json({'SUCCESS': newBlob});
-    }
-  });
-}
+// function addBlob(req, res) {
+//   var newBlob = new Blob({
+//     name: req.body.name,
+//     lastName: req.body.lastName
+//   });
+//   newBlob.save(function(err) {
+//     if(err) {
+//       res.json({'ERROR': err});
+//     } else {
+//       res.json({'SUCCESS': newBlob});
+//     }
+//   });
+// }
 
 // *** put SINGLE blob *** //
-function updateBlob(req, res) {
-  Blob.findById(req.params.id, function(err, blob) {
-    blob.name = req.body.name;
-    blob.lastName = req.body.lastName;
-    blob.save(function(err) {
-      if(err) {
-        res.json({'ERROR': err});
-      } else {
-        res.json({'UPDATED': blob});
-      }
-    });
-  });
-}
+// function updateBlob(req, res) {
+//   Blob.findById(req.params.id, function(err, blob) {
+//     blob.name = req.body.name;
+//     blob.lastName = req.body.lastName;
+//     blob.save(function(err) {
+//       if(err) {
+//         res.json({'ERROR': err});
+//       } else {
+//         res.json({'UPDATED': blob});
+//       }
+//     });
+//   });
+// }
 
 // *** delete SINGLE blob *** //
-function deleteBlob(req, res) {
-  Blob.findById(req.params.id, function(err, blob) {
-    if(err) {
-      res.json({'ERROR': err});
-    } else {
-      blob.remove(function(err){
-        if(err) {
-          res.json({'ERROR': err});
-        } else {
-          res.json({'REMOVED': blob});
-        }
-      });
-    }
-  });
-}
+// function deleteBlob(req, res) {
+//   Blob.findById(req.params.id, function(err, blob) {
+//     if(err) {
+//       res.json({'ERROR': err});
+//     } else {
+//       blob.remove(function(err){
+//         if(err) {
+//           res.json({'ERROR': err});
+//         } else {
+//           res.json({'REMOVED': blob});
+//         }
+//       });
+//     }
+//   });
+// }
 
 module.exports = router;

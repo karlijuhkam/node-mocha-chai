@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./api/app",
-    "nodemon": "nodemon ./api/app.js"
+    "start": "nodemon ./api/app",
+    "test": "mocha test --timeout 0"
   },
   "dependencies": {
     "algorithmia": "^0.3.10",

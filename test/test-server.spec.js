@@ -1,13 +1,11 @@
-process.env.NODE_ENV = 'test';
+ process.env.NODE_ENV = 'test';
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var mongoose = require("mongoose");
 
-var server = require('../api/app');
+var server = require('../api/test-app');
 
-
-var should = chai.should();
+ var should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -66,8 +64,38 @@ describe('Algorithms', function () {
                 res.should.be.json
                 done();
             });
+    });
 
-
+    it('should detect that the language used is english', function(done){
+        chai.request(server)
+            .post('/detectlang')
+            .send({
+                'input': 'This is in english'
+            })
+            .end(function (err,res){
+                res.should.have.status(200);
+                res.body.result.should.be.equal("en");
+                done();
+            });
+    });
+    it('should count all words in sentence "how much wood could a woodchuck chuck if a woodchuck could chuck wood"',function(done){
+        chai.request(server)
+        .post('/wordfreq')
+        .send({
+            'input':'how much wood could a woodchuck chuck if a woodchuck could chuck wood'
+        })
+        .end(function(err,res){
+            res.should.have.status(200);
+            res.body.result.a.should.be.equal(2);
+            res.body.result.chuck.should.be.equal(2);
+            res.body.result.could.should.be.equal(2);
+            res.body.result.how.should.be.equal(1);
+            res.body.result.if.should.be.equal(1);
+            res.body.result.much.should.be.equal(1);
+            res.body.result.wood.should.be.equal(2);
+            res.body.result.woodchuck.should.be.equal(2);
+            done();
+        });
     });
 
 });
